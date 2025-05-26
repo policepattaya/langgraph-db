@@ -103,6 +103,6 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ## Links
 
-- [Documentation](https://langgraph-db.docs.pratikpatil.me)
+- [Documentation](https://langgraph-db.pratikpatil.me)
 - [GitHub Repository](https://github.com/0xpratikpatil/langgraph-db)
 - [NPM Package](https://www.npmjs.com/package/langgraph-db)
