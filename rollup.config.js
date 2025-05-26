@@ -1,34 +1,30 @@
 import typescript from "@rollup/plugin-typescript";
 import { nodeResolve } from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
-import json from "@rollup/plugin-json";
+import packageJson from "./package.json";
+import PeerDepsExternalPlugin from "rollup-plugin-peer-deps-external";
+import dts from "rollup-plugin-dts";
+import terser from "@rollup/plugin-terser";
 
 const config = [
   {
     input: "src/index.ts",
     output: [
       {
-        file: "dist/index.js",
-        format: "es",
-        sourcemap: true,
-      },
-      {
-        file: "dist/index.cjs",
+        file: packageJson.main,
         format: "cjs",
         sourcemap: true,
       },
       {
-        file: "dist/index.d.ts",
-        format: "es",
+        file: packageJson.module,
+        format: "esm",
         sourcemap: true,
       },
     ],
-    external: [
-      "@langchain/langgraph-checkpoint",
-      "@langchain/core",
-      "redis",
-    ],
+    external: ["@langchain/langgraph-checkpoint", "@langchain/core", "redis"],
     plugins: [
+      PeerDepsExternalPlugin(),
+      terser(),
       nodeResolve({ preferBuiltins: true, browser: false }),
       typescript({
         tsconfig: "./tsconfig.json",
@@ -38,9 +34,17 @@ const config = [
         exclude: ["**/*.test.ts", "examples/**/*"],
       }),
       commonjs(),
-      json(),
     ],
+  },
+  {
+    input: "src/index.ts",
+    output: [
+      {
+        file: packageJson.types,
+      },
+    ],
+    plugins: [dts.default()],
   },
 ];
 
-export default config; 
+export default config;

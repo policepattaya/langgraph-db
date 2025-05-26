@@ -1,2 +1,2 @@
-export * from "./saver/index.js";
-export * from "./store/index.js";
+export * from "./saver/index";
+export * from "./store/index";

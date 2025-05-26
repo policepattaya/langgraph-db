@@ -1,9 +1,10 @@
 # LangGraph-DB
 
-![License](https://img.shields.io/npm/l/langgraph-db)
+<!-- ![NPM License](https://img.shields.io/npm/l/langgraph-db) -->
+
 ![npm](https://img.shields.io/npm/v/langgraph-db)
 
-A powerful memory backend for [LangGraph.js](https://js.langchain.com/docs/integrations/langgraph/) that provides short-term and long-term memory for your agents using flexible storage providers.
+A powerful memory backend for [LangGraph.js](https://langchain-ai.github.io/langgraphjs/) that provides short-term and long-term memory for your agents using flexible storage providers.
 
 ## Features
 
@@ -17,8 +18,8 @@ A powerful memory backend for [LangGraph.js](https://js.langchain.com/docs/integ
 
 LangGraph-DB implements the checkpoint interfaces from LangGraph.js, featuring two core components:
 
-1. **Saver**: Manages short-term memory 
-2. **Store**: Handles long-term persistence
+1. **Saver**: Manages short-term memory (thread-level)
+2. **Store**: Handles long-term persistence (cross-thread)
 
 Both components are implemented using an adapter pattern, allowing seamless integration with various storage backends while maintaining a consistent API.
 
@@ -80,12 +81,11 @@ const saver = new RedisSaver({ client: redisClient });
 
 ## Supported Providers
 
-| Provider | Status      | Import Path              |
-|----------|-------------|--------------------------|
-| Redis    | ✅ Available | `langgraph-db`           |
-| MongoDB  | 🔜 Coming Soon | `langgraph-db/providers/mongodb` |
-| Prisma   | 🔜 Coming Soon | `langgraph-db/providers/prisma` |
-
+| Provider      | Status         |
+| ------------- | -------------- |
+| Redis/Upstash | ✅ Available   |
+| MongoDB       | 🔜 Coming Soon |
+| Prisma        | 🔜 Coming Soon |
 
 ## Contributing
 
