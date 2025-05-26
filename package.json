@@ -1,0 +1,83 @@
+{
+  "name": "langgraph-db",
+  "version": "0.0.1",
+  "description": "Langraph-DB is a powerful memory backend for LangGraph.js that brings short-term and long-term memory to your agents using flexible storage providers like MongoDB, Prisma, Redis, and more.",
+  "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "homepage": "https://langgraph-db.docs.pratikpatil.me",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/0xpratikpatil/langgraph-db.git"
+  },
+  "scripts": {
+    "build": "rollup -c",
+    "clean": "rm -rf dist/ .turbo/",
+    "lint": "eslint --cache --ext .ts,.js src/",
+    "format": "prettier --config .prettierrc --write \"src\"",
+    "docs": "typedoc --out docs src/index.ts"
+  },
+  "author": "Pratik Patil",
+  "license": "MIT",
+  "dependencies": {
+    "@langchain/langgraph-checkpoint": "^0.0.17",
+    "redis": "^4.7.1"
+  },
+  "peerDependencies": {
+    "@langchain/core": "^0.3.57"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^25.0.8",
+    "@rollup/plugin-json": "^6.1.0",
+    "@rollup/plugin-node-resolve": "^15.3.1",
+    "@rollup/plugin-typescript": "^11.1.6",
+    "@types/node": "^20.17.50",
+    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "@typescript-eslint/parser": "^6.21.0",
+    "eslint": "^8.57.1",
+    "eslint-config-prettier": "^8.10.0",
+    "prettier": "^2.8.8",
+    "rollup": "^4.41.1",
+    "typedoc": "^0.25.13",
+    "typescript": "^5.8.3"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "exports": {
+    ".": {
+      "types": {
+        "import": "./dist/index.d.ts",
+        "require": "./dist/index.d.cts",
+        "default": "./dist/index.d.ts"
+      },
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./providers/*": {
+      "types": "./dist/providers/*/index.d.ts",
+      "import": "./dist/providers/*/index.js",
+      "require": "./dist/providers/*/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist/",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "langchain",
+    "langgraph",
+    "ai",
+    "database",
+    "redis",
+    "persistence",
+    "checkpoint"
+  ]
+}
