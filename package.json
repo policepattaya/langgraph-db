@@ -1,6 +1,6 @@
 {
   "name": "langgraph-db",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Langraph-DB is a powerful memory backend for LangGraph.js that brings short-term and long-term memory to your agents using flexible storage providers like MongoDB, Prisma, Redis, and more.",
   "type": "module",
   "engines": {

@@ -1,6 +1,9 @@
 # Dependency directories
 node_modules/
 
+# Documentation
+docs/
+
 # Build outputs
 dist/
 *.tsbuildinfo
